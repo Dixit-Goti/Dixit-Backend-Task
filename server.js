@@ -1,11 +1,14 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDb from "./src/config/db.js";
+import authRoutes from "./src/routes/auth.routes.js";
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+
+connectDb();
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -14,7 +17,7 @@ app.get("/", (req, res) => {
   });
 });
 
-connectDb();
+app.use("/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
